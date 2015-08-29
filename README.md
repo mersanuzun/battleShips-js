@@ -1,1 +1,1 @@
-# battleShipsJS
+# battleships with javascript
