@@ -1,1 +1,1 @@
-# battleships with javascript
+# battleships with javascript, socketio and ractive
