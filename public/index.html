@@ -1,1 +1,42 @@
-hello world
+<!doctype html>
+<html lang='tr-GB'>
+<head>
+  <meta charset='utf-8'>
+  <script src='/libs/ractive.js'></script>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <title>Battleships</title>
+</head>
+<body>
+  <div id='container'></div>
+  <script id='template' type='text/ractive'>
+    {{#if gamePhase == 'take-player-name'}}
+        <div class='take-player-name'>
+            <span>Player Name</span>
+            <input type='text' value={{playerName}}>
+            <input type='button' on-click='sendName:{{playerName}}' id='send-name' value='Send'>
+        </div>
+    {{/if}}
+    {{#if gamePhase == 'game-area'}}
+        {{#if player1Board}}
+            <div class='game-area'>
+                <table class="board">
+                {{#each player1Board:i}}
+                    <tr>
+                    {{#each player1Board[i]}}
+                        <td on-click="tikla">
+                        {{this}}
+                        </td>
+                    {{/each}}
+                    </tr>
+                {{/each}}
+                </table>
+            </div>
+        {{/if}}
+    {{/if}}
+  </script>
+  <script src="gameSocket.js"></script>
+  <script src="gameRactive.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+.board td{
+    border: solid 1px;
+    width: 25px;
+    height: 25px;
+}
+#send-name {
+    width: 75px;
+    
+}

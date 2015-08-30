@@ -1,4 +1,5 @@
-function Player(name){
+function Player(playerID, name){
+    this.playerID = playerID
     this.name = name;
     this.point = 0;
     this.board;
