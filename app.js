@@ -7,29 +7,37 @@ var app = express();
 app.use(express.static('public'));
 var server = require("http").createServer(app);
 var io = require("socket.io").listen(server);
-port = "4545";
+port = "5050";
 server.listen(port);
 console.log("Server is running at", port);
 app.use(express.static(__dirname + '/public/'));
 app.get("/", function(req, res){
     res.sendfile(__dirname + "/public/index.html");
 });
-var players = {};
-s = new Ship("gemi", 2);
-b = new Board();
-p = new Player("ersan");
-
-s.setShip("H", 1,2)
-b.addShip(s)
-p.setBoard(b)
-console.log(b.board)
-console.log(b.ships[0].coordinates.length)
-
+var players = [];
+var watcher = [];
+var ships = [];
+var shipNames = [
+    {name: "Aircraft Carrier", size: 5},
+    {name: "Battleship", size: 4},
+    {name: "Submarine", size: 3},
+    {name: "Destroyer", size: 3},
+    {name: "Patrol Boat", size: 2}
+];
+shipNames.forEach(function(s){
+    ships.push(new Ship(s.name, s.size));
+})
+console.log(ships)
 io.on('connection', function(socket){
     socket.on("player-name", function(name){
-        players[socket.id] = new Player(socket.id, name);
-        players[socket.id].setBoard(new Board());
-        socket.emit("player", players[socket.id]);
+        if (players.length == 2){
+            watcher.push(name);
+        }else{
+            socket.player = new Player(socket.id, name);
+            socket.player.setBoard(new Board());
+            players.push(socket.player)
+        }
+        io.emit("start-game", {players: players, ships: ships});
     })
 });
 

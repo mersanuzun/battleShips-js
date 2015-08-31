@@ -10,7 +10,7 @@
 <body>
   <div id='container'></div>
   <script id='template' type='text/ractive'>
-    {{#if gamePhase == 'take-player-name'}}
+    {{#if gamePhase == 'player-name'}}
         <div class='take-player-name'>
             <span>Player Name</span>
             <input type='text' value={{playerName}}>
@@ -18,22 +18,38 @@
         </div>
     {{/if}}
     {{#if gamePhase == 'game-area'}}
-        {{#if player1Board}}
-            <div class='game-area'>
-                <table class="board">
-                {{#each player1Board:i}}
-                    <tr>
-                    {{#each player1Board[i]}}
-                        <td on-click="tikla">
-                        {{this}}
-                        </td>
+        <div class='game-area'>
+            {{#if player}}
+                <table class="board {{#if hasTurn == 1}}  {{/if}}" id='player1Board'>
+                    <th colspan='{{player.board.board.length}}'>{{player.name}}</th>
+                    {{#each player.board.board:i}}
+                        <tr>
+                        {{#each player.board.board[i]:j}}
+                            <td on-click="placeShip:{{i}},{{j}}">
+                            {{this}}
+                            </td>
+                        {{/each}}
+                        </tr>
                     {{/each}}
-                    </tr>
-                {{/each}}
                 </table>
-            </div>
-        {{/if}}
+            {{/if}}
+            {{#if opponent}}
+                <table class="board" id='player2Board'>
+                    <th colspan='{{opponent.board.board.length}}'>{{opponent.name}}</th>
+                    {{#each opponent.board.board:i}}
+                        <tr>
+                        {{#each opponent.board.board[i]:j}}
+                            <td on-click="hit:{{i}},{{j}}">
+                            {{this}}
+                            </td>
+                        {{/each}}
+                        </tr>
+                    {{/each}}
+                </table>
+            {{/if}}
+        </div>
     {{/if}}
+    {{ships}}
   </script>
   <script src="gameSocket.js"></script>
   <script src="gameRactive.js"></script>

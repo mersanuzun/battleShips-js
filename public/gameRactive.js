@@ -1,14 +1,24 @@
+var gamePhases = [
+    "player-name",
+    "game-area"
+]
+
 var ractive = new Ractive({
     el: '#container',
     template: '#template',
     data: { 
-        player1Board: [],
-        player2Board: [],
-        gamePhase:'take-player-name',
-        players : []
+        player: null,
+        opponent: null,
+        gamePhase: gamePhases[0],
+        ships: null
     }
 });
 ractive.on("sendName", function(e, name){
-    socket.emit("player-name", name)
-    this.set("gamePhase", "game-area")
+    if (name){
+        socket.emit("player-name", name)
+        this.set("gamePhase", gamePhases[1])   
+    }
+})
+ractive.on("placeShip", function(e, x, y){
+    console.log(x, y)
 })

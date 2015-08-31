@@ -1,9 +1,20 @@
 .board td{
     border: solid 1px;
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
 }
 #send-name {
     width: 75px;
     
+}
+.board {
+    float:left;
+    margin: 25px;
+}
+.board th {
+    border: solid 1px;
+}
+.game-area table{
+    margin-left: 10%;
+    height: 100px;
 }
