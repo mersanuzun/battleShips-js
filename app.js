@@ -15,13 +15,8 @@ app.get("/", function(req, res){
 });
 var players = [];
 var watcher = [];
+var hasTurn = 0;
 var readyPlayersNumber = 0;
-p = new Player("asdasd");
-b = new Board();
-s = new  Ship(1,2)
-b.placeShip(s);
-p.setBoard(b);
-console.log(p.board.hit(1,22))
 io.on('connection', function(socket){
     socket.on("player-name", function(name){
         if (players.length == 2){
@@ -40,12 +35,13 @@ io.on('connection', function(socket){
     socket.on("ready", function(){
         readyPlayersNumber++;
         if (readyPlayersNumber == 2){
-            io.emit("start-game")
+            io.emit("start-game", {hasTurn: players[0].playerID})
         }
         console.log(readyPlayersNumber)
     })
     socket.on("hit", function(data){
         console.log(findPlayer(data.oppID).board.hit(data.x, data.y))
+        changeTurn();
     })
 });
 
@@ -54,4 +50,8 @@ function findPlayer(id){
         if (players[i].playerID == id) break;
     }
     return players[i];
+}
+function changeTurn(){
+    hasTurn = hasTurn == 1 ? 0 : 1;
+    io.emit("changeTurn", players[hasTurn].playerID);
 }

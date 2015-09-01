@@ -46,8 +46,11 @@
                         {{#each opponent.board.board:i}}
                             <tr>
                             {{#each opponent.board.board[i]:j}}
-                                <td on-click="hit:{{i}},{{j}}">
-                                {{this}}
+                                <td on-click="
+                                        {{#if hasTurn == player.playerID}}
+                                        hit
+                                        {{/if}}:{{i}},{{j}}">
+                                    {{this}}
                                 </td>
                             {{/each}}
                             </tr>

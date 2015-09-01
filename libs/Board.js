@@ -21,7 +21,7 @@ Board.prototype.hit = function(x, y){
             break;
         }
     }
-    if (i < this.ships.length - 1){
+    if (i < this.ships.length){
         return true;
     }else return false;
 }
