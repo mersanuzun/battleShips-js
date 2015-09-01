@@ -17,39 +17,49 @@
             <input type='button' on-click='sendName:{{playerName}}' id='send-name' value='Send'>
         </div>
     {{/if}}
-    {{#if gamePhase == 'game-area'}}
+    {{#if gamePhase != 'player-name'}}
         <div class='game-area'>
-            {{#if player}}
-                <table class="board {{#if hasTurn == 1}}  {{/if}}" id='player1Board'>
-                    <th colspan='{{player.board.board.length}}'>{{player.name}}</th>
-                    {{#each player.board.board:i}}
-                        <tr>
-                        {{#each player.board.board[i]:j}}
-                            <td on-click="placeShip:{{i}},{{j}}">
-                            {{this}}
-                            </td>
+            <div class='status'><b>qweqasdasdasdasdwe</b></div>
+            <div class='player'>
+                {{#if player}}
+                    <table class="board {{#if hasTurn == 1}}  {{/if}}" id='player1Board'>
+                        <th colspan='{{player.board.board.length}}'>{{player.name}}</th>
+                        {{#each player.board.board:i}}
+                            <tr>
+                            {{#each player.board.board[i]:j}}
+                                <td on-click="
+                                        {{#if player.board.shipNumber != 0}}
+                                            placeShip
+                                        {{/if}}:{{i}},{{j}}">
+                                    {{this}}
+                                </td>
+                            {{/each}}
+                            </tr>
                         {{/each}}
-                        </tr>
-                    {{/each}}
-                </table>
-            {{/if}}
-            {{#if opponent}}
-                <table class="board" id='player2Board'>
-                    <th colspan='{{opponent.board.board.length}}'>{{opponent.name}}</th>
-                    {{#each opponent.board.board:i}}
-                        <tr>
-                        {{#each opponent.board.board[i]:j}}
-                            <td on-click="hit:{{i}},{{j}}">
-                            {{this}}
-                            </td>
+                    </table>
+                {{/if}}
+            </div>
+            <div class='opponent'>
+                {{#if opponent}}
+                    <table class="board" id='player2Board'>
+                        <th colspan='{{opponent.board.board.length}}'>{{opponent.name}}</th>
+                        {{#each opponent.board.board:i}}
+                            <tr>
+                            {{#each opponent.board.board[i]:j}}
+                                <td on-click="hit:{{i}},{{j}}">
+                                {{this}}
+                                </td>
+                            {{/each}}
+                            </tr>
                         {{/each}}
-                        </tr>
-                    {{/each}}
-                </table>
-            {{/if}}
+                    </table>
+                {{/if}}
+            </div>
         </div>
     {{/if}}
-    {{ships}}
+    {{#if gamePhase == 'ship-placement'}}
+        <a href='#'><div class='ready' on-click='ready'>READY</div></a>
+    {{/if}}
   </script>
   <script src="gameSocket.js"></script>
   <script src="gameRactive.js"></script>

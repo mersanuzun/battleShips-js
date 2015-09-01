@@ -1,5 +1,4 @@
 var express = require("express");
-var Cell = require("./libs/Cell.js");
 var Ship = require("./libs/Ship.js");
 var Player = require("./libs/Player.js");
 var Board = require("./libs/Board.js")
@@ -16,18 +15,13 @@ app.get("/", function(req, res){
 });
 var players = [];
 var watcher = [];
-var ships = [];
-var shipNames = [
-    {name: "Aircraft Carrier", size: 5},
-    {name: "Battleship", size: 4},
-    {name: "Submarine", size: 3},
-    {name: "Destroyer", size: 3},
-    {name: "Patrol Boat", size: 2}
-];
-shipNames.forEach(function(s){
-    ships.push(new Ship(s.name, s.size));
-})
-console.log(ships)
+var readyPlayersNumber = 0;
+p = new Player("asdasd");
+b = new Board();
+s = new  Ship(1,2)
+b.placeShip(s);
+p.setBoard(b);
+console.log(p.board.hit(1,22))
 io.on('connection', function(socket){
     socket.on("player-name", function(name){
         if (players.length == 2){
@@ -37,7 +31,27 @@ io.on('connection', function(socket){
             socket.player.setBoard(new Board());
             players.push(socket.player)
         }
-        io.emit("start-game", {players: players, ships: ships});
+        io.emit("init", players);
+    })
+    socket.on("placeShip", function(coor){
+        socket.player.board.placeShip(new Ship(coor.x, coor.y))
+        console.log(socket.player)
+    });
+    socket.on("ready", function(){
+        readyPlayersNumber++;
+        if (readyPlayersNumber == 2){
+            io.emit("start-game")
+        }
+        console.log(readyPlayersNumber)
+    })
+    socket.on("hit", function(data){
+        console.log(findPlayer(data.oppID).board.hit(data.x, data.y))
     })
 });
 
+function findPlayer(id){
+    for(var i = 0; i < players.length; i++){
+        if (players[i].playerID == id) break;
+    }
+    return players[i];
+}

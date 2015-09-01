@@ -7,9 +7,14 @@
     width: 75px;
     
 }
-.board {
+#player1Board {
+    border: 1px solid;
     float:left;
-    margin: 25px;
+    margin-left: 30%;
+}
+#player2Board {
+    border: 1px solid;
+    float: none;
 }
 .board th {
     border: solid 1px;
@@ -17,4 +22,22 @@
 .game-area table{
     margin-left: 10%;
     height: 100px;
+}
+.ship{
+    background-color: brown;
+}
+.status{
+    width: 100%;
+    height: 40px;
+    background-color: cyan;
+    margin: 5px;
+    text-align: center;
+    padding: 2px;
+}
+.ready {
+    border-radius: 20px;
+    background-color: blueviolet;
+    text-decoration-line: none;
+    text-align: center;
+    margin: 10px;
 }
