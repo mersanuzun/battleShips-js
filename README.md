@@ -1,1 +1,14 @@
-# battleships with javascript, socketio and ractive
+# Battleships with socketio
+
+Installation
+-----------
+
+```
+npm install
+```
+Run Server
+-----------
+
+```
+nodejs app.js
+```
