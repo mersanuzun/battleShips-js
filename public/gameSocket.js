@@ -16,9 +16,22 @@ socket.on("init", function(players){
 })
 socket.on("start-game", function(data){
     ractive.set("gamePhase", "game-start");
+    ractive.set("gameStatus", "START")
     ractive.set("hasTurn", data.hasTurn)
+    setTurn();
 })
-socket.on("changeTurn", function(turn){
-    console.log(turn)
-    ractive.set("hasTurn", turn)
+socket.on("changeTurn", function(hasTurn){
+    console.log(hasTurn)
+    ractive.set("hasTurn", hasTurn)
+    setTurn();
+})
+socket.on("ready", function(){
+    ractive.set("ready", true);
+    ractive.set("gameStatus", "Your opponent is expected.")
+})
+socket.on("non-ready", function(){
+    ractive.set("gameStatus", "Please, place more " + ractive.get("player.board.shipNumber") + " ships.")
+})
+socket.on("opp-ready", function(){
+    ractive.set("gameStatus", "Your opponent is ready.")
 })

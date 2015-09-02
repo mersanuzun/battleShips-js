@@ -7,6 +7,8 @@ var ractive = new Ractive({
         gamePhase: "player-name",
         ships: null,
         hasTurn: null,
+        ready: false,
+        status: null
     }
 });
 ractive.on("sendName", function(e, name){
