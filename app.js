@@ -30,7 +30,7 @@ io.on('connection', function(socket){
     })
     socket.on("placeShip", function(coor){
         socket.player.board.placeShip(new Ship(coor.x, coor.y))
-        console.log(socket.player)
+        socket.emit("board", socket.player.board.board);
     });
     socket.on("ready", function(){
         if (checkShipNumbers(socket.player.board) == false){
@@ -40,13 +40,14 @@ io.on('connection', function(socket){
             socket.emit("ready");
             if (readyPlayersNumber == 2){
                 io.emit("start-game", {hasTurn: players[0].playerID});
-                return
+                return;
             }
             socket.broadcast.emit("opp-ready");
         }
     })
     socket.on("hit", function(data){
-        console.log(findPlayer(data.oppID).board.hit(data.x, data.y))
+        var result = findPlayer(data.oppID).board.hit(data.x, data.y);
+        socket.emit("hitResult", {hitResult: result, oppBoard: findPlayer(data.oppID).board.board})
         changeTurn();
     })
 });
@@ -57,6 +58,7 @@ function findPlayer(id){
     }
     return players[i];
 }
+
 function changeTurn(){
     hasTurn = hasTurn == 1 ? 0 : 1;
     io.emit("changeTurn", players[hasTurn].playerID);

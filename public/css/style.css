@@ -24,7 +24,14 @@
     height: 100px;
 }
 .ship{
-    background-color: brown;
+    background-image: url("../images/ship.png");
+    background-color: blueviolet;
+}
+.sunken-ship{
+    background-image: url("../images/hit.png");
+}
+.none-hit{
+    background-image: url("../images/none-hit.png");
 }
 .status{
     width: 100%;

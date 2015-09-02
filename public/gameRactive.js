@@ -5,10 +5,10 @@ var ractive = new Ractive({
         player: null,
         opponent: null,
         gamePhase: "player-name",
-        ships: null,
         hasTurn: null,
         ready: false,
-        status: null
+        gameStatus: null,
+        hitResult: null
     }
 });
 ractive.on("sendName", function(e, name){
@@ -18,7 +18,7 @@ ractive.on("sendName", function(e, name){
     }
 })
 ractive.on("placeShip", function(e, x, y){
-    event.target.className = 'ship';
+    //event.target.className = 'ship';
     this.set("player.board.shipNumber", this.get('player.board.shipNumber') - 1)
     socket.emit("placeShip", {x: x, y: y});
 })

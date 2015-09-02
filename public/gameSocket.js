@@ -35,3 +35,14 @@ socket.on("non-ready", function(){
 socket.on("opp-ready", function(){
     ractive.set("gameStatus", "Your opponent is ready.")
 })
+socket.on("board", function(board){
+    ractive.set("player.board.board", board);
+});
+socket.on("hitResult", function(data){
+    ractive.set("opponent.board.board", data.oppBoard);
+    ractive.set("hitResult", data.hitResult)
+})
+
+
+
+

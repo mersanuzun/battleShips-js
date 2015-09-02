@@ -19,7 +19,7 @@
     {{/if}}
     {{#if gamePhase != 'player-name'}}
         <div class='game-area'>
-            <div class='status'><b>{{gameStatus}}</b></div>
+            <div class='status'><b>{{gameStatus}}<br> {{hitResult}}</b></div>
             <div class='player'>
                 {{#if player}}
                     <table class="board {{#if hasTurn == 1}}  {{/if}}" id='player1Board'>
@@ -30,7 +30,13 @@
                                 <td on-click="
                                         {{#if player.board.shipNumber != 0}}
                                             {{#if opponent != null}} placeShip {{/if}}
-                                        {{/if}}:{{i}},{{j}}">
+                                        {{/if}}:{{i}},{{j}}"
+                                    class='
+                                    {{#if this == "0"}} 
+                                        ship
+                                    {{elseif this == "1"}} 
+                                        sunken-ship
+                                     {{/if}}'>
                                     {{this}}
                                 </td>
                             {{/each}}
@@ -49,8 +55,13 @@
                                 <td on-click="
                                         {{#if hasTurn == player.playerID}}
                                         hit
-                                        {{/if}}:{{i}},{{j}}">
-                                    {{this}}
+                                        {{/if}}:{{i}},{{j}}"
+                                    class='
+                                    {{#if this == 1}} 
+                                        sunken-ship 
+                                    {{elseif this == -1}} 
+                                        none-hit
+                                    {{/if}}'>
                                 </td>
                             {{/each}}
                             </tr>
