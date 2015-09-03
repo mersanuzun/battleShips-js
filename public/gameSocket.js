@@ -18,7 +18,6 @@ socket.on("start-game", function(data){
     setTurn();
 })
 socket.on("changeTurn", function(hasTurn){
-    console.log(hasTurn)
     ractive.set("hasTurn", hasTurn)
     setTurn();
 })
@@ -40,7 +39,6 @@ socket.on("hitResult", function(data){
     ractive.set("hitResult", data.hitResult)
 })
 socket.on("afterHitBoard", function(boardObj){
-    console.log("asd")
     ractive.set("player.board", boardObj);
 })
 socket.on("gameFinished", function(data){
