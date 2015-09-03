@@ -1,7 +1,4 @@
 var socket = io();
-socket.on("board", function(data){
-    ractive.set("player1Board", data)
-})
 socket.on("init", function(players){
     if (players.length == 2){
         if (ractive.get("player") != null){

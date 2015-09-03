@@ -1,5 +1,4 @@
 var express = require("express");
-var Ship = require("./libs/Ship.js");
 var Player = require("./libs/Player.js");
 var Board = require("./libs/Board.js")
 var app = express();
@@ -29,7 +28,7 @@ io.on('connection', function(socket){
         io.emit("init", players);
     })
     socket.on("placeShip", function(coor){
-        socket.player.board.placeShip(new Ship(coor.x, coor.y))
+        socket.player.board.placeShip(coor.x, coor.y)
         socket.emit("board", socket.player.board.board);
     });
     socket.on("ready", function(){
@@ -47,7 +46,7 @@ io.on('connection', function(socket){
     })
     socket.on("hit", function(data){
         var result = findPlayer(data.oppID).board.hit(data.x, data.y);
-        socket.emit("hitResult", {hitResult: result, oppBoard: findPlayer(data.oppID).board.board})
+        socket.emit("hitResult", {hitResult: result, oppBoard: findPlayer(data.oppID).board.board});
         changeTurn();
     })
 });
@@ -65,6 +64,12 @@ function changeTurn(){
 }
 
 function checkShipNumbers(board){
-    if (board.shipNumber == board.ships.length) return true;
+    var counter = 0;
+    for (var i = 0; i < board.board.length; i++){
+        for (var j = 0; j < board.board.length; j++){
+            if (board.board[i][j] == "0") counter++;
+        }
+    }
+    if (board.shipNumber == counter) return true;
     else return false;
 }

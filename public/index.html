@@ -30,14 +30,13 @@
                                 <td on-click="
                                         {{#if player.board.shipNumber != 0}}
                                             {{#if opponent != null}} placeShip {{/if}}
-                                        {{/if}}:{{i}},{{j}}"
-                                    class='
-                                    {{#if this == "0"}} 
-                                        ship
-                                    {{elseif this == "1"}} 
-                                        sunken-ship
-                                     {{/if}}'>
-                                    {{this}}
+                                        {{/if}}:{{i}},{{j}}">
+                                    {{#if this == "1" || this == "0" || this == "-1"}}
+                                    <img src="
+                                        {{#if this == "0"}}
+                                            ../images/ship.png
+                                        {{/if}}" height="35" width="35">
+                                    {{/if}}
                                 </td>
                             {{/each}}
                             </tr>
@@ -54,16 +53,21 @@
                             {{#each opponent.board.board[i]:j}}
                                 <td on-click="
                                         {{#if hasTurn == player.playerID}}
-                                        hit
-                                        {{/if}}:{{i}},{{j}}"
-                                    class='
-                                    {{#if this == 1}} 
-                                        sunken-ship 
-                                    {{elseif this == -1}} 
-                                        none-hit
-                                    {{/if}}'>
+                                            {{#if this == ""}}
+                                                hit
+                                            {{/if}}
+                                        {{/if}}:{{i}},{{j}}">
+                                    {{#if this == "-1" || this == "1"}}
+                                    <img src="
+                                        {{#if this == "1"}}
+                                            ../images/sunkenShip.png
+                                        {{else}}
+                                            ../images/none-hit.png
+                                        {{/if}}" height="35" width="35">
+                                    {{/if}}
                                 </td>
                             {{/each}}
+                            
                             </tr>
                         {{/each}}
                     </table>

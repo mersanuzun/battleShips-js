@@ -18,9 +18,10 @@ ractive.on("sendName", function(e, name){
     }
 })
 ractive.on("placeShip", function(e, x, y){
-    //event.target.className = 'ship';
-    this.set("player.board.shipNumber", this.get('player.board.shipNumber') - 1)
-    socket.emit("placeShip", {x: x, y: y});
+    if (this.get("player.board.board." + x + "." + y) == ""){
+        this.set("player.board.shipNumber", this.get('player.board.shipNumber') - 1);
+        socket.emit("placeShip", {x: x, y: y});
+    }
 })
 ractive.on("hit", function(e, x, y){
     socket.emit("hit", {x: x, y: y, oppID: this.get("opponent.playerID")})
