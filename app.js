@@ -46,7 +46,12 @@ io.on('connection', function(socket){
     })
     socket.on("hit", function(data){
         var result = findPlayer(data.oppID).board.hit(data.x, data.y);
-        socket.emit("hitResult", {hitResult: result, oppBoard: findPlayer(data.oppID).board.board});
+        socket.emit("hitResult", {hitResult: result, oppBoardObj: findPlayer(data.oppID).board});
+        socket.broadcast.emit("afterHitBoard", findPlayer(data.oppID).board);
+        if (findPlayer(data.oppID).board.sunkenShip == findPlayer(data.oppID).board.shipNumber){
+            io.emit("gameFinished", {winner: socket.player, lost: findPlayer(data.oppID)});
+            return
+        }
         changeTurn();
     })
 });

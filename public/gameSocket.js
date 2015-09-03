@@ -36,10 +36,18 @@ socket.on("board", function(board){
     ractive.set("player.board.board", board);
 });
 socket.on("hitResult", function(data){
-    ractive.set("opponent.board.board", data.oppBoard);
+    ractive.set("opponent.board", data.oppBoardObj);
     ractive.set("hitResult", data.hitResult)
 })
-
-
-
+socket.on("afterHitBoard", function(boardObj){
+    console.log("asd")
+    ractive.set("player.board", boardObj);
+})
+socket.on("gameFinished", function(data){
+    if (ractive.get("player.playerID") == data.winner.playerID)
+        ractive.set("gameStatus", "You Win.")
+    else
+        ractive.set("gameStatus", "You Lost.")
+    ractive.set("gamePhase", "game-finished");
+})
 

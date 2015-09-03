@@ -1,6 +1,6 @@
 function Board(){
     this.ships = [];
-    this.shipNumber = 8;
+    this.shipNumber = 2;
     this.sunkenShip = 0;
     this.board = [
         ["","","","","",""],
